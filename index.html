@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Login</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/core/2.0.5/core.min.css" />
+  <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/components/2.0.0/components.min.css" />
+
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h1 class="navbar-brand">
+            <!--<a href="/"><span>logo here</span></a>-->
+          </h1>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="li-docs no-basic">
+              <a href="/help">Help</a>
+            </li>
+            <!--<li><a class="signin-button login" href="bashboard-link">Dashboard</a>
+                </li>-->
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div id="loading">
+    <div class="spinner spinner-md is-auth0">
+      <div class="circle"></div>
+    </div>
+  </div>
+
+  <section class="jumbotron">
+    <h2>
+      <img src="https://cdn.auth0.com/website/styleguide/getting-started-icon.svg" alt="Jumbotron image" />
+    </h2>
+    <h1>Welcome to our awesome app</h1>
+    <p>This is where we make magic happen.</p>
+    <div id="qsLoginBtn" class="btn btn-success btn-lg">LOG IN</div>
+  </section>
+
+  <div id="content">
+
+    <div class="col-xs-12 col-md-4">
+      <article class="card-docs">
+        <i class="card-docs-icon icon-budicon-499 red"></i>
+        <h2 class="card-docs-title">Twilio</h2>
+        <p class="card-docs-description">Build the future of communications.</p>
+        <a class="card-docs-more" href="https://www.twilio.com/">More</a>
+      </article>
+    </div>
+    <div class="col-xs-12 col-md-4">
+      <article class="card-docs">
+        <i class="card-docs-icon icon-budicon-342 red"></i>
+        <h2 class="card-docs-title">PubNub</h2>
+        <p class="card-docs-description">Realtime. Real Simple.</p>
+        <a class="card-docs-more" href="https://www.pubnub.com" />More</a>
+      </article>
+    </div>
+    <div class="col-xs-12 col-md-4">
+      <article class="card-docs">
+        <img class="card-docs-icon" src="https://cdn.auth0.com/styleguide/components/1.0.8/media/logos/img/badge.svg" alt="Auth0 logo"
+          width="30">
+        <h2 class="card-docs-title">Auth0</h2>
+        <p class="card-docs-description">Identity as a service.</p>
+        <a class="card-docs-more" href="https://auth0.com/">More</a>
+      </article>
+    </div>
+
+  </div>
+  <!-- END OF CONTENT -->
+
+  <script src="node_modules/auth0-js/build/auth0.js"></script>
+  <script src="auth0-variables.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

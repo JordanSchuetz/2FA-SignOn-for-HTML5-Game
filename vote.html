@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Login</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/core/2.0.5/core.min.css" />
+  <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/components/2.0.0/components.min.css" />
+
+  <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <h1 class="navbar-brand">
+            <!--<a href="/"><span>Logo Here</span></a>-->
+          </h1>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="li-docs no-basic">
+              <a href="/help">Help</a>
+            </li>
+            <!--<li><a class="signin-button login" href="">Dashboard</a>
+                </li>-->
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="alert alert-success">
+    <strong>Fantastic!</strong> You're in!</div>
+
+  <h1>Time to vote!</h1>
+
+  <!-- VOTING SECTOIN -->
+
+  <div class="btn btn-default" id="yes-btn">Yes</div>
+
+  <div class="btn btn-default" id="no-btn">No</div>
+
+  <h5>Online voters:</h5>
+  <div id="users-online">users-online</div>
+
+  <!-- RESULT SECTOIN -->
+
+  <h3>The results are in..</h3>
+
+  <div id="chart" />
+
+  <script> 
+    // voting 
+    document.getElementById("yes-btn").onclick = function() {myFunction()};
+
+function myFunction() {
+
+}
+
+    // create pubnub publish and subscribe key 
+    var pubnubChart = new PubNub({
+      publishKey: 'pub-key',
+      subscribeKey: 'sub-key'
+    });
+
+    // create chart settings
+    eon.chart({
+      pubnub: pubnubChart,
+      channels: ['awesome-vote'],
+      generate: {
+        bindto: '#chart',
+        data: {
+          type: 'gauge',
+        },
+        gauge: {
+          min: 0,
+          max: 100
+        },
+        color: {
+          pattern: ['#FF0000', '#F6C600', '#60B044'],
+          threshold: {
+            values: [30, 60, 90]
+          }
+        }
+      }
+    });
+
+    pubnubChart.subscribe({
+      channels: ['awesome-vote'],
+    });
+
+    // function to publish results to chart
+    function publishResults() {
+      pubnubChart.publish({
+        channel: 'awesome-vote',
+        message: {
+          eon: {
+            'data': Math.random() * 99
+            //'data': 90.0,
+          }
+        }
+      })
+    }
+
+    // call publish results once button is clicked
+    publishResults();
+
+    // for detecting online precense 
+    var pubnubOnline = new PubNub({
+      publishKey: 'pub-key',
+      subscribeKey: 'sub-key'
+    });
+
+
+    // get number of folks online
+    pubnubOnline.hereNow(
+      {
+        channels: ["awesome-channel"],
+      },
+      function (status, response) {
+        document.getElementById("users-online").innerHTML = response.totalOccupancy;
+      });
+
+    pubnubOnline.addListener({
+      presence: function (presenceEvent) {
+        document.getElementById("users-online").innerHTML = presenceEvent.occupancy;
+      }
+    })
+
+    pubnubOnline.subscribe({
+      channels: ['awesome-channel'],
+      withPresence: true
+    });
+
+  </script>
+
+</body>
+
+</html>
