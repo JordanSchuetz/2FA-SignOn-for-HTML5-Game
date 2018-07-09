@@ -1,4 +1,3 @@
-!doctype html>
 <html>
 
 <head>
@@ -7,13 +6,11 @@
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://jordanschuetz.github.io/2FA-SignOn-for-HTML5-Game/style.css">
+  <link rel="stylesheet" href="style.css">
 
   <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/core/2.0.5/core.min.css" />
   <link rel="stylesheet" href="https://cdn.auth0.com/styleguide/components/2.0.0/components.min.css" />
-  <script src="https://cdn.auth0.com/js/auth0/9.6.1/auth0.min.js"></script>
-  <script src="https://jordanschuetz.github.io/2FA-SignOn-for-HTML5-Game/auth0-variables.js"></script>
-  <script src="https://jordanschuetz.github.io/2FA-SignOn-for-HTML5-Game/app.js"></script>
+
 </head>
 
 <body>
@@ -58,6 +55,7 @@
     <h1>Welcome to our awesome app</h1>
     <p>This is where we make magic happen.</p>
     <div id="qsLoginBtn" class="btn btn-success btn-lg">LOG IN</div>
+    <div id="playBtn" class="btn btn-success btn-lg">LET'S PLAY!</div>
   </section>
 
   <div id="content">
@@ -90,6 +88,9 @@
 
   </div>
   <!-- END OF CONTENT -->
+  <script src="node_modules/auth0-js/build/auth0.js"></script>
+  <script src="auth0-variables.js"></script>
+  <script src="app.js"></script>
 </body>
 
 </html>
