@@ -1,6 +1,10 @@
 window.addEventListener('load', function () {
   var loadingSpinner = document.getElementById('loading');
   loadingSpinner.style.display = 'none';
+  var playBtn = document.getElementById('playBtn');
+  playBtn.style.display = 'none';
+  var username;
+  var userProfile;
 
   var webAuth = new auth0.WebAuth({
     domain: AUTH0_DOMAIN,
@@ -8,24 +12,20 @@ window.addEventListener('load', function () {
     redirectUri: AUTH0_CALLBACK_URL,
     audience: 'https://' + AUTH0_DOMAIN + '/userinfo',
     responseType: 'token id_token',
-    scope: 'openid',
+    scope: 'openid profile',
     leeway: 60
   });
-
-  var loginStatus = document.querySelector('.container h4');
-
-  // button(s) and event listeners
-  var loginBtn = document.getElementById('qsLoginBtn');
 
   loginBtn.addEventListener('click', function (e) {
     e.preventDefault();
     webAuth.authorize();
   });
 
-  logoutBtn.addEventListener('click', logout);
+  playBtn.addEventListener('click', function(){window.location = 'game.html';});
 
   function setSession(authResult) {
     // Set the time that the access token will expire at
+    console.log("set session!!");
     var expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
@@ -48,20 +48,57 @@ window.addEventListener('load', function () {
     return new Date().getTime() < expiresAt;
   }
 
+  function getProfile() {
+    if (!userProfile) {
+      var accessToken = localStorage.getItem('access_token');
+
+      if (!accessToken) {
+        console.log('Access token must exist to fetch profile');
+      }
+
+      console.log("requesting profile!!");
+      webAuth.client.userInfo(accessToken, function(err, profile) {
+        if (profile) {
+          userProfile = profile;
+          setDisplayName();
+        }
+      });
+    } else {
+      setDisplayName();
+    }
+  }
+
+  function setDisplayName() {
+    username = userProfile.name;
+    console.log(username);
+    localStorage.setItem('username', username);
+  }
+
   function handleAuthentication() {
+
     webAuth.parseHash(function (err, authResult) {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         setSession(authResult);
-        loginBtn.style.display = 'none';
       } else if (err) {
         console.log(err);
         alert(
           'Error: ' + err.error + '. Check the console for further details.'
         );
       }
-     // displayButtons();
+     displayButtons();
     });
+  }
+
+  function displayButtons() {
+    getProfile();
+    if (isAuthenticated()) {
+      loginBtn.style.display = 'none';
+      playBtn.style.display = 'inline-block';
+    } else {
+      loginBtn.style.display = 'inline-block';
+      playBtn.style.display = 'none';
+    }
   }
 
   handleAuthentication();
