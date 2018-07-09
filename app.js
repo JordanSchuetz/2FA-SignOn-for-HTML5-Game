@@ -22,7 +22,7 @@ window.addEventListener('load', function () {
     webAuth.authorize();
   });
 
-  playBtn.addEventListener('click', function(){window.location = 'game.html';});
+  playBtn.addEventListener('click', function(){window.location = window.location.href.substring(0,location.href.lastIndexOf('/')+1)+'vote.html';});
 
   function setSession(authResult) {
     // Set the time that the access token will expire at
@@ -30,28 +30,28 @@ window.addEventListener('load', function () {
     var expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
-    localStorage.setItem('access_token', authResult.accessToken);
-    localStorage.setItem('id_token', authResult.idToken);
-    localStorage.setItem('expires_at', expiresAt);
+    window.localStorage.setItem('access_token', authResult.accessToken);
+    window.localStorage.setItem('id_token', authResult.idToken);
+    window.localStorage.setItem('expires_at', expiresAt);
   }
 
   function logout() {
-    // Remove tokens and expiry time from localStorage
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('id_token');
-    localStorage.removeItem('expires_at');
+    // Remove tokens and expiry time from window.localStorage
+    window.localStorage.removeItem('access_token');
+    window.localStorage.removeItem('id_token');
+    window.localStorage.removeItem('expires_at');
   }
 
   function isAuthenticated() {
     // Check whether the current time is past the
     // access token's expiry time
-    var expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+    var expiresAt = JSON.parse(window.localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
 
   function getProfile() {
     if (!userProfile) {
-      var accessToken = localStorage.getItem('access_token');
+      var accessToken = window.localStorage.getItem('access_token');
 
       if (!accessToken) {
         console.log('Access token must exist to fetch profile');
@@ -71,7 +71,8 @@ window.addEventListener('load', function () {
 
   function setDisplayName() {
     username = userProfile.name;
-    console.log(username);
+    //console.log(userProfile.name);
+   // console.log(username);
     localStorage.setItem('username', username);
   }
 
