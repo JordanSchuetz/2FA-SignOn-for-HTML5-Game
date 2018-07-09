@@ -9,6 +9,7 @@ function generateName() {
     return color + '-' + animal;
 }
 
+
 window.initChatEngine = function() {
     // Don't draw the Chat UI more than once
     if (document.getElementById('chatLog')) return;
@@ -31,6 +32,9 @@ window.initChatEngine = function() {
     function onMessage(message) {
         var uuid = message.data.uuid;
         var text = message.data.text;
+        console.log("uuid: ", uuid)
+
+        console.log("text: ", text)
 
         // add the message to the chat UI
         var domContent = `<div class="chat-message"><b>${uuid}:</b> ${text}</div>`;
@@ -85,7 +89,12 @@ window.initChatEngine = function() {
     // ChatEngine 
     //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-    var name = window.UniqueID;
+    //var name = window.UniqueID;
+    var hi = localStorage.getItem('username');
+    console.log(hi);
+    hi = hi.split(' ').join('');
+    console.log(hi)
+    var name = hi;
 
     // Connect the ChatEngine App (Different PubSub keys from game)
     var ChatEngine = ChatEngineCore.create({
