@@ -71,8 +71,8 @@ window.addEventListener('load', function () {
 
   function setDisplayName() {
     username = userProfile.name;
-    //console.log(userProfile.name);
-   // console.log(username);
+    console.log(userProfile.name);
+    console.log(username);
     localStorage.setItem('username', username);
   }
 
