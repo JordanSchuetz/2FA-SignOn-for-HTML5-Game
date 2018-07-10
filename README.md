@@ -1,5 +1,7 @@
 # JavaScript voting app sample w/Auth0 & Twilio & PubNub <3 
 
+https://jordanschuetz.github.io/2FA-SignOn-for-HTML5-Game/
+
 This sample demonstrates how to add authentication to a JavaScript application with Auth0 and 2FA with Twilio. 
 The sample makes use of PubNub realtime updates to power the voting system within the applicaiton. 
 
